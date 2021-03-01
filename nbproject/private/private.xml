@@ -3,10 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/xampp/htdocs/ToDoListPHP/pages/connected/tasks.php</file>
             <file>file:/C:/xampp/htdocs/ToDoListPHP/pages/connected/home.php</file>
             <file>file:/C:/xampp/htdocs/ToDoListPHP/functions/sql_functions.php</file>
             <file>file:/C:/xampp/htdocs/ToDoListPHP/pages/connected/profile.php</file>
             <file>file:/C:/xampp/htdocs/ToDoListPHP/pages/disconnected/login.php</file>
+            <file>file:/C:/xampp/htdocs/ToDoListPHP/index.php</file>
         </group>
     </open-files>
 </project-private>

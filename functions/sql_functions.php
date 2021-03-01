@@ -71,4 +71,39 @@ function changePhoto ($id, $photo)
     return mysqli_query($link, $query);
 }
 
-function createTask($user, title, date, type,)
+function createTask($title, $date, $type, $description, $user){
+    $link = connectDB();
+    $title = clearData($title, $link);
+    $date = clearData ($date, $link);
+    $type = clearData($type, $link);
+    $description = clearData($description, $link);
+    $user = clearData($user, $link);
+    $query = "INSERT INTO tasks VALUES (NULL, '$title', '$date', '$type','$description', '$user')";
+    return mysqli_query($link, $query);
+}
+
+function showTasks($user){
+    $link = connectDB();
+    $user = clearData($user, $link);
+    $query = "SELECT * FROM tasks WHERE user='$user'";
+    $tasks = mysqli_query($link, $query);
+    return mysqli_fetch_all($tasks, MYSQLI_ASSOC);
+}
+
+function filterTaskByTitle($title, $user){
+    $link = connectDB();
+    $title = clearData($title, $link);
+    $user = clearData($user, $link);
+    $query = "SELECT * FROM tasks WHERE user='$user' AND title LIKE '%$title%'";
+    $tasks = mysqli_query($link, $query);
+    return mysqli_fetch_all($tasks, MYSQLI_ASSOC);
+}
+
+function sortTaksByType($type, $user){
+    $link = connectDB();
+    $type = clearData($type, $link);
+    $user = clearData($user, $link);
+    $query = "SELECT * FROM tasks WHERE user='$user' AND type='$type'";
+    $tasks = mysqli_query($link, $query);
+    return mysqli_fetch_all($tasks, MYSQLI_ASSOC);
+}
