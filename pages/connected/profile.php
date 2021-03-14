@@ -37,7 +37,7 @@
                             if($photoSaved){
                                 $updatePhoto = changePhoto($user["id"], $photoName);
                                 if ($updatePhoto){
-                                    header("location:index.php?page=2");
+                                    header("location:index.php?page=1");
                                 }else{
                                     unlink("photos/".$photoName);
                                     print $_FILES["photo"]["error"];

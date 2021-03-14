@@ -1,35 +1,31 @@
-<h1>Tasks list</h1>
+<h2>Filter the list</h2>
 <?php
     $user = getUserByEmailOrUsername(null, $_SESSION["username"]);
 ?>
 <form>
     Search task: <input type="text" id="title" name="title">
-    <button id="search" name="search" value="search">Search</button>
-    <button id="reset" name="reset" value="reset">Reset</button>
-    <h2>Filter by type</h2>
+    <br>
     <input type="radio" id="task" name="type" value="task">
   <label for="task">Task</label><br>
   <input type="radio" id="event" name="type" value="event">
   <label for="event">Event</label><br>
   <input type="radio" id="type" name="type" value="reminder">
   <label for="reminder">Reminder</label>
-  <button id="filter" name="filter" value="filter">Filter</button>
+  <br>
+  <button id="search" name="search" value="search">Search</button>
+  <button id="reset" name="reset" value="reset">Reset</button>
 </form>
 <?php
     if (isset($_GET["search"])){
-        $title = $_GET["title"];
-        $tasks = filterTaskByTitle($title, $user["id"]);
+        $title = isset($_GET["title"])? $_GET["title"]: null;
+        $type = isset($_GET["type"])? $_GET["type"]: null;
+        $tasks = filterTasks($title, $type, $user["id"]);
         setcookie('title',$title, time()+24*60*60);
-    }elseif (isset($_COOKIE["title"])){
-        $title = $_COOKIE["title"];
-        $tasks = filterTaskByTitle($title, $user["id"]);
-    }elseif (isset($_GET["filter"])){
-        $type = $_GET["type"];
-        $tasks = sortTaksByType($type, $user["id"]);
-        setcookie('type',$type, time()+24*60*60);
-    }elseif (isset($_COOKIE["type"])){
-        $type = $_COOKIE["type"];
-        $tasks = sortTaksByType($ype, $user["id"]);
+        setcookie("type", $type, time()+24*60*60);
+    }elseif (isset($_COOKIE["title"]) or isset ($_COOKIE["type"])){
+            $title = isset($_COOKIE["title"])? $_COOKIE["title"]: null;
+            $type = isset($_COOKIE["type"])? $_COOKIE["type"]:null;
+        $tasks = filterTasks($title, $type, $user["id"]);
     }else{
     $tasks = showTasks($user["id"]);
     };
@@ -38,16 +34,19 @@
         setcookie("title", "", time()-1);
         setcookie("type","", time()-1);
         header("location:index.php");
-    }
-    var_dump($tasks);
+    };
+?>
+<h2>Task list</h2>
+<?php
     foreach ($tasks as $task){
-        print "<br>";
-        print $task["title"]."<br>";
-        print $task["date"]."<br>";
-        print $task["type"]."<br>";
-        print $task["description"]."<br>";
+        print "<p>".$task["title"]."</p>";
+        print "<p>".$task["date"]."</p>";
+        print "<p>".$task["type"]."</p>";
+        print "<p>".$task["description"]."</p><br>";
     }
 ?>
+<br>
+<h2>Add a task</h2>
 <form method="POST">
     <table>
         <tr>

@@ -90,20 +90,14 @@ function showTasks($user){
     return mysqli_fetch_all($tasks, MYSQLI_ASSOC);
 }
 
-function filterTaskByTitle($title, $user){
-    $link = connectDB();
-    $title = clearData($title, $link);
-    $user = clearData($user, $link);
-    $query = "SELECT * FROM tasks WHERE user='$user' AND title LIKE '%$title%'";
-    $tasks = mysqli_query($link, $query);
-    return mysqli_fetch_all($tasks, MYSQLI_ASSOC);
-}
 
-function sortTaksByType($type, $user){
+function filterTasks( $title, $type, $user)
+{
     $link = connectDB();
-    $type = clearData($type, $link);
     $user = clearData($user, $link);
-    $query = "SELECT * FROM tasks WHERE user='$user' AND type='$type'";
+    $title = clearData($title, $link);
+    $type = clearData($type, $link);
+    $query = "SELECT * FROM tasks WHERE title LIKE '%$title' AND type LIKE '%$type' AND user='$user' ";
     $tasks = mysqli_query($link, $query);
     return mysqli_fetch_all($tasks, MYSQLI_ASSOC);
 }
